@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     public float speed = 0;
     public TextMeshProUGUI countText;
     public GameObject winTextObject;
+    public Vector3 jump;
 
     private Rigidbody rb;
     private int count;  
@@ -23,6 +24,7 @@ public class PlayerController : MonoBehaviour
 
         SetCountText();
         winTextObject.SetActive(false);
+        jump = new Vector3(0.0f, 10.0f, 0.0f);
     }
 
     private void OnMove(InputValue movementValue)
@@ -35,7 +37,7 @@ public class PlayerController : MonoBehaviour
     void SetCountText()
     {
         countText.text = "Count: " + count.ToString();
-        if(count >= 12)
+        if(count >= 13)
         {
             winTextObject.SetActive(true);
         }
@@ -56,6 +58,10 @@ public class PlayerController : MonoBehaviour
             count = count + 1;
 
             SetCountText();
+        }
+        if(other.gameObject.CompareTag("JumpPad"))
+        {
+            rb.AddForce(Vector3.up * 300);
         }
     }
 }
